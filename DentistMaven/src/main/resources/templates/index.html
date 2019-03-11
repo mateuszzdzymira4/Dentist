@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.com"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="pl">
+<head>
+	<meta charset="UTF-8">
+	<title>Dent-Med</title>
+
+	<meta name="description" content="Gabinet dentystyczny Dent-Med">
+	<meta name="keywords" content="dentysta, gabinet dentystyczny, stomatolog, stomatologia">
+	<meta name="author" content="Mateusz Zdzymira">
+	
+	<meta http-equiv="X-Ua-Compatible" content="IE=edge">
+	
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/fontello.css}">
+	
+	<link href="https://fonts.googleapis.com/css?family=Yantramanav:400,700&amp;subset=latin-ext" rel="stylesheet">	
+	<link href="https://fonts.googleapis.com/css?family=Fugaz+One" rel="stylesheet">
+	
+	<script src="js/jquery-3.3.1.min.js"></script>
+	
+		<script>
+		
+			$(document).ready(function() {
+			var NavY = $('.navbar').offset().top;
+			 
+			var stickyNav = function(){
+			var ScrollY = $(window).scrollTop();
+				  
+			if (ScrollY > NavY) { 
+				$('.navbar').addClass('sticky');
+			} else {
+				$('.navbar').removeClass('sticky'); 
+			}
+			};
+			 
+			stickyNav();
+			 
+			$(window).scroll(function() {
+				stickyNav();
+			});
+			});
+			
+		</script>
+	
+</head>
+
+<body>
+
+	<header>
+		
+			<div id="logo">
+				<a href="/">
+					<img src="img/tooth-1501321_640_res.png">
+					<span id="dent">Dent</span>-Med
+					
+				</a>
+				<div style="clear:both"></div>
+			</div>
+		
+	</header>
+	
+	<nav>
+		<div class="navbar">
+			<ul>
+				<li><a href="#logo">Wprowadzenie</a></li><li><a href="#about">O nas</a></li><li><a href="#staff">Kadra</a></li><li><a href="#pricelist">Cennik</a></li><li><a href="#contact">Kontakt</a></li>
+			</ul>
+		</div>
+	</nav>
+	
+	<article>
+	
+		<div id="intro">
+			<div id="whitebox">
+				<h1>
+					Strona jest swoistym systemem do zarządzania gabinetem stomatologicznym Dent-Med. Dzięki niemu możesz poznać szczegóły dotyczące gabinetu, umówić się na wizytę w konkretny dzień, konkretną godzinę, oraz u konkretnego lekarza. Posiadamy kalendarz wizyt, dzięki czemu od razu wiesz, kiedy jesteśmy do twojej dyspozycji. <br /><br />
+					Jeżeli jesteś zainteresowany skorzystaniem z usług naszego gabinetu, wystarczy że klikniesz przycisk <i>Przejdź do serwisu</i>, a my zadbamy, by poprowadzić cię przez tę procedurę szybko i bez problemów. <br />
+				</h1>
+					<a href="home"><input type="submit" value="Przejdź do serwisu"></a>
+			</div>
+		</div>
+		
+		<div id="about">
+			<div id="whitebox">
+				<h2>Dent-Med to największy gabinet stomatologiczny w Kielcach. Działamy już od 12 lat, dzięki czemu doskonale wiemy, czego oczekują od nas nasi pacjenci. Nasza kadra to specjaliści z wieloletnim doświadczeniem w dziedzinie stomatologii.</h2>
+				<img src="img/zdjgab.jpg">
+				<div style="clear:both"></div>
+			</div>
+		</div>
+		
+		<section id="staff">
+			<div id="dentist1">
+				<div id="whitebox">
+					<h1>lekarz stomatolog Aleksander Sokół</h1>
+	
+					<img src="img/sokol.jpg">
+		
+					<h3>
+						 Wieloletni specjalista z wielkimi osiągnięciami, ceniony przez naszych pacjentów. Związany z naszym gabinetem od ponad 5 lat.
+					</h3>
+					<div style="clear:both"></div>
+				</div>
+			</div>
+	
+					
+			<div id="dentist2">
+				<div id="whitebox">
+					<h1>lekarz stomatolog Robert Wilk</h1>
+					
+					<img src="img/wilk.jpg">
+					
+					<h3>
+						Renomowany specjalista z wieloletnim doświadczeniem, który jest na bieżąco z nowymi trendami w dziedzinie stomatologii.
+					</h3>
+					<div style="clear:both"></div>
+				</div>
+			</div>
+		</section>
+		
+		<div id="pricelist">
+			<div id="whitebox">
+				<table>
+				  <tr>
+				    <th colspan="3">Cennik</th>
+				  </tr>
+				  <tr>
+				    <td>Badanie wstępne</td>
+				    <td>0 zł</td> 
+				  </tr>
+				  <tr>
+				    <td>Konsultacja stomatologiczna</td>
+				    <td>50 zł</td> 
+				  </tr>
+				  <tr>
+				    <td>Znieczulenie miejscowe</td>
+				    <td>30 zł</td> 
+				  </tr>
+				  <tr>
+				    <td>Wypełnienie</td>
+				    <td>60 zł</td> 
+				  </tr>
+				  <tr>
+				    <td>Fluoryzacja</td>
+				    <td>55 zł</td> 
+				  </tr>
+				  <tr>
+				    <td>Odbudowa</td>
+				    <td>120 zł</td> 
+				  </tr>
+				  <tr>
+				    <td>Wybielanie zębów</td>
+				    <td>600 zł</td> 
+				  </tr>
+				  <tr>
+				    <td>Leczenie zęba kanałowego</td>
+				    <td>150 zł</td> 
+				  </tr>
+				</table>
+			</div>
+		</div>
+		
+		<div id="contact">
+			<div id="whitebox">
+				<div class="contactdesc">
+					<h4><i class="icon-clock"></i>Godziny otwarcia:</h4>
+					
+					pon-pn: 9:00-17:00<br />
+					sob: 9:00-14:00
+					
+					<h4><i class="icon-location"></i>Adres:</h4>
+					
+					ul. Warszawska 99<br />
+					25-001 Kielce
+					
+					<h4>Kontakt:</h4>
+				
+					<i class="icon-phone"></i>Telefon: 500 000 000 <br />
+					<i class="icon-mail"></i>E-mail: <a href="mailto:dent-med@mail.com" target="top">dent-med@mail.com </a> <br />
+					<a href="https://www.facebook.com" target="top"><i class="icon-facebook"></i>Facebook</a>
+					
+				</div>	
+			</div>
+		</div>		
+		
+
+		
+	</article>
+	
+	<footer>
+		&copy 2018 Dent-Med Inc. Wszelkie prawa zastrzeżone.
+	</footer>
+
+</body>
+
+</html>

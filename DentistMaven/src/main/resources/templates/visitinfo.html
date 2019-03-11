@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.com"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="pl">
+<head>
+	<meta charset="UTF-8">
+	<title>Dent-Med</title>
+
+	<meta name="description" content="Gabinet dentystyczny Dent-Med">
+	<meta name="keywords" content="dentysta, gabinet dentystyczny, stomatolog, stomatologia">
+	<meta name="author" content="Mateusz Zdzymira">
+	
+	<meta http-equiv="X-Ua-Compatible" content="IE=edge">
+	
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/fontello.css}">
+	
+	<link href="https://fonts.googleapis.com/css?family=Yantramanav:400,700&amp;subset=latin-ext" rel="stylesheet">	
+	<link href="https://fonts.googleapis.com/css?family=Fugaz+One" rel="stylesheet">
+	
+	<script src="js/jquery-3.3.1.min.js"></script>
+	
+		<script>
+				$(document).ready( function() {
+				    var now = new Date();
+				 
+				    var day = ("0" + now.getDate()).slice(-2);
+				    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+				   
+				    
+				    var hour = ("0" + (now.getHours())).slice(-2);
+				    var minute = ("0" + (now.getMinutes())).slice(-2);
+
+				    var today = now.getFullYear()+"-"+(month)+"-"+(day)+" "+ (hour)+":"+(minute);
+
+
+				   $('.datefield').val(today);
+				    
+				});
+		</script>
+	
+</head>
+
+<body>
+
+		<nav>
+			<div class="navbar2">
+				<ul>
+					<li style="padding: 0px;">
+						<div id="logomin">
+							<a href="/">
+								<img src="../../img/tooth-1501321_640_resmin.png">
+								<span id="dent">Dent</span>-Med
+								
+							</a>
+							<div style="clear:both"></div>
+						</div>
+					</li>
+					<li><a href="/">Strona główna</a></li>
+					<li><a href="/home">Panel główny</a></li>
+					<li>Szczegóły wizyty</li>
+				</ul>
+				<div sec:authorize="isAuthenticated()" class="logged">
+
+					<i class="icon-user"></i>Witaj, [[${#httpServletRequest.remoteUser}]]!(<a th:href="@{/logout}">Wyloguj</a>)
+					<div style="clear:both"></div>
+				</div>
+				
+				<div sec:authorize="isAnonymous()" class="logged">
+
+					<i class="icon-user"></i>Niezalogowany(<a th:href="@{/login}">Zaloguj</a>)
+
+					<div style="clear:both"></div>
+				</div>
+			</div>
+		</nav>
+		
+	
+	<div id="whitebox">
+		<h4>Szczegóły wizyty</h4>
+		<span style="text-align:center;">
+			Ponizej znajdują się szczegóły wybranej wizyty.
+		</span>
+		
+		<div id="visitinfo">
+			<div class="vinfo2">
+				<h6>Informacje o wizycie:</h6>
+				<ul>
+						<li th:text="'Imię i nazwisko doktora: '+${visit.doctor.fname}+' '+${visit.doctor.lname}">Doktor</li>
+						<li th:text="'Cel wizyty: '+${visit.purpose}">Cel wizyty</li>
+						<li th:text="'Data: '+${visit.date}">Data wizyty</li>
+						<li th:text="'Godzina: '+${visit.hour}">Godzina</li>
+						<li th:text="'Status: '+${visit.state}">Status</li>
+						<li th:if="${visit.comment != null}" th:text="'Komentarz lekarza: '+${visit.comment}">Status</li>
+			
+				</ul>
+			</div>	
+			<div class="vinfo2">
+				<h6>Informacje o pacjencie:</h6>
+				<ul>
+						<li th:text="'Imię i nazwisko pacjenta: '+${visit.patient.fname}+' '+${visit.patient.lname}">Pacjent</li>
+						<li th:text="'E-mail pacjenta: '+${visit.patient.mail}">E-mail pacjenta</li>
+						<li th:text="'Telefon pacjenta: '+${visit.patient.phone}">Telefon pacjenta</li>
+						<li th:text="'Data rejestracji pacjenta: '+${visit.patient.creationDate}">Data rejestracji</li>
+					
+				</ul>
+			</div>
+			<div class="vinfo2">
+				<h6>Informacje o lekarzu:</h6>
+				<ul>
+						<li th:text="'Imię i nazwisko lekarza: '+${visit.doctor.fname}+' '+${visit.doctor.lname}">Pacjent</li>
+						<li th:text="'E-mail lekarza: '+${visit.doctor.mail}">E-mail pacjenta</li>
+						<li th:text="'Telefon lekarza: '+${visit.doctor.phone}">Telefon pacjenta</li>
+					
+				</ul>
+			</div>
+			<br />
+			<div id="vbuttons">
+				<a sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_DOCTOR')" th:href="'/'+${role}+${'/editvisit/'+visit.id}"><input type="submit" value="Edytuj dane"></a>
+				<a sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_DOCTOR')" href="../verifyvisits"><input type="button" value="Powrót do listy wizyt"></a>
+				<a sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_DOCTOR')" th:href="'../deletevisit/'+${visit.id}"><input type="button" style="background-color: #ff151c;" value="Usuń wizytę"></a>
+				<a sec:authorize="hasRole('ROLE_USER')" th:href="'../yourvisits='+${visit.patient.id}"><input type="button" value="Powrót do listy wizyt"></a>
+				<a sec:authorize="hasRole('ROLE_USER')" th:href="'../cancelvisit/'+${visit.id}"><input type="button" style="background-color: #ff151c;" value="Anuluj wizytę"></a>
+				
+			</div>
+		</div>
+		
+		
+	</div>
+	
+	<footer>
+			&copy 2018 Dent-Med Inc. Wszelkie prawa zastrzeżone.
+	</footer>
+
+</body>
+
+</html>

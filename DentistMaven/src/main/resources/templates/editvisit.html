@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.com"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="pl">
+<head>
+	<meta charset="UTF-8">
+	<title>Dent-Med</title>
+
+	<meta name="description" content="Gabinet dentystyczny Dent-Med">
+	<meta name="keywords" content="dentysta, gabinet dentystyczny, stomatolog, stomatologia">
+	<meta name="author" content="Mateusz Zdzymira">
+	
+	<meta http-equiv="X-Ua-Compatible" content="IE=edge">
+	
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/fontello.css}">
+	
+	<link href="https://fonts.googleapis.com/css?family=Yantramanav:400,700&amp;subset=latin-ext" rel="stylesheet">	
+	<link href="https://fonts.googleapis.com/css?family=Fugaz+One" rel="stylesheet">
+	
+	<script src="js/jquery-3.3.1.min.js"></script>
+	
+		<script>
+				$(document).ready( function() {
+				    var now = new Date();
+				 
+				    var day = ("0" + now.getDate()).slice(-2);
+				    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+				   
+				    
+				    var hour = ("0" + (now.getHours())).slice(-2);
+				    var minute = ("0" + (now.getMinutes())).slice(-2);
+
+				    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+				    var time = (hour)+":"+(minute);
+
+
+				   $('#datefield').val(today);
+				   $('#hourfield').val(time);
+				    
+				});
+		</script>
+	
+</head>
+
+<body>
+
+		<nav>
+			<div class="navbar2">
+				<ul>
+					<li style="padding: 0px;">
+						<div id="logomin">
+							<a href="/">
+								<img src="../../img/tooth-1501321_640_resmin.png">
+								<span id="dent">Dent</span>-Med
+								
+							</a>
+							<div style="clear:both"></div>
+						</div>
+					</li>
+					<li><a href="/">Strona główna</a></li>
+					<li>Panel główny</li>
+					<li>Niezweryfikowane wizyty</li>
+					<li>Dane wizyty</li>
+				</ul>
+				<div sec:authorize="isAuthenticated()" class="logged">
+
+					<i class="icon-user"></i>Witaj, [[${#httpServletRequest.remoteUser}]]!(<a th:href="@{/logout}">Wyloguj</a>)
+					<div style="clear:both"></div>
+				</div>
+				
+				<div sec:authorize="isAnonymous()" class="logged">
+
+					<i class="icon-user"></i>Niezalogowany(<a th:href="@{/login}">Zaloguj</a>)
+
+					<div style="clear:both"></div>
+				</div>
+			</div>
+		</nav>
+		
+	
+	<div id="whitebox">
+		<h4>Dane wizyty</h4>
+		
+		<span style="text-align:center;">
+			W tym oknie możesz dokonać edycji wizyty, zmienić jej status i detale. <br /><br />
+		</span>
+		<div id="visitdata">
+			<form method="post">
+				
+				<fieldset>
+							
+					<legend> Zakres wizyty: </legend>
+							
+						<div class="column">
+							<div><label><input type="radio" name="purpose" value="Badanie wstępne" checked> Badanie wstępne </label></div>
+							<div><label><input type="radio" name="purpose" value="Konsultacja stomatologiczna"> Konsultacja stomatologiczna </label></div>
+							<div><label><input type="radio" name="purpose" value="Znieczulenie miejscowe"> Znieczulenie miejscowe </label></div>
+							<div><label><input type="radio" name="purpose" value="Wypełnienie"> Wypełnienie </label></div>
+						</div>
+						
+						<div class="column">
+							<div><label><input type="radio" name="purpose" value="Fluoryzacja" > Fluoryzacja </label></div>
+							<div><label><input type="radio" name="purpose" value="Odbudowa"> Odbudowa </label></div>
+							<div><label><input type="radio" name="purpose" value="Wybielanie zębów"> Wybielanie zębów </label></div>
+							<div><label><input type="radio" name="purpose" value="Leczenie zęba kanałowego"> Leczenie zęba kanałowego </label></div>
+						</div>
+						
+				</fieldset>
+				
+				<!--<object type="text/html" data="calendar" style="width: 100%; height: 431px;"> </object>-->
+	
+				
+				<h6 style="font-size: 20px;">
+					<label for="datefield">Data: </label>
+					<input type="date" name="date" th:value="${date}" id="datefield" style="margin-right: 10px;">
+					<label for="hourfield">Godzina: </label>
+					<input type="time" name="hour" th:value="${hour}" id="hourfield" min="9:00" max="17:00">
+				</h6>
+				
+				<div class="statuslist">
+					<label for="state">Status wizyty:</label>	
+					<select id="state" name="state">
+						<option th:value="${state}" th:text="${state}+' (nie zmieniono)'"></option>
+						<option th:value="Zarejestrowano">Zarejestrowano</option>
+						<option th:value="Zakończono">Zakończono</option>
+						<option th:value="Anulowano">Anulowano</option>
+					</select>
+				</div>
+				
+				<label for="comment">Komentarz lekarza: </label>
+				
+				<input th:value="${comment}" type="text" name="comment" id="comment">
+				
+				<input type="submit" value="Zatwierdź dane">
+				<a href="../verifyvisits"><input type="button" value="Powrót do listy wizyt"></a>
+			</form>
+		</div>
+		
+		
+	</div>
+	
+	<footer>
+			&copy 2018 Dent-Med Inc. Wszelkie prawa zastrzeżone.
+	</footer>
+
+</body>
+
+</html>

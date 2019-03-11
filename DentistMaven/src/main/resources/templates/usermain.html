@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.com"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="pl">
+<head>
+	<meta charset="UTF-8">
+	<title>Dent-Med</title>
+
+	<meta name="description" content="Gabinet dentystyczny Dent-Med">
+	<meta name="keywords" content="dentysta, gabinet dentystyczny, stomatolog, stomatologia">
+	<meta name="author" content="Mateusz Zdzymira">
+	
+	<meta http-equiv="X-Ua-Compatible" content="IE=edge">
+	
+	<link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style.css">
+	<link rel="stylesheet" th:href="@{/css/fontello.css}" href="../static/css/fontello.css">
+	
+	<link href="https://fonts.googleapis.com/css?family=Yantramanav:400,700&amp;subset=latin-ext" rel="stylesheet">	
+	<link href="https://fonts.googleapis.com/css?family=Fugaz+One" rel="stylesheet">
+	
+	<script src="js/jquery-3.3.1.min.js"></script>
+	
+	
+</head>
+
+<body>
+
+		<nav>
+			<div class="navbar2">
+				<ul>
+					<li style="padding: 0px;">
+						<div id="logomin">
+							<a href="/">
+								<img src="../img/tooth-1501321_640_resmin.png">
+								<span id="dent">Dent</span>-Med
+								
+							</a>
+							<div style="clear:both"></div>
+						</div>
+					</li>
+					<li><a href="/">Strona główna</a></li>
+					<li>Panel główny</li>
+				</ul>
+				<div sec:authorize="isAuthenticated()" class="logged">
+
+					<i class="icon-user"></i>Witaj, [[${#httpServletRequest.remoteUser}]]!(<a th:href="@{/logout}">Wyloguj</a>)
+					<div style="clear:both"></div>
+				</div>
+				
+				<div sec:authorize="isAnonymous()" class="logged">
+
+					<i class="icon-user"></i>Niezalogowany(<a th:href="@{/login}">Zaloguj</a>)
+
+					<div style="clear:both"></div>
+				</div>
+			</div>
+		</nav>
+		
+	
+	<div id="whitebox">
+		<h4><span th:text="'Witaj, '+${patient.fname+'!'}">Witaj!</span></h4>
+		<span style="text-align:center; display: block;">
+			Na tej stronie masz możliwość wyboru między weryfikacją zgłoszonych wizyt, a dostępem do archiwum wizyt, które zawiera wszystkie z nich.
+		</span>
+		<div id="visitmanagement">
+			
+			<a href="addvisit">
+				<div id="verifyvisits">
+					<h5>Nowa wizyta</h5>
+					<i class="icon-pencil"></i>
+					<br /><br />
+					Umów się na nową wizytę.
+				</div>
+			</a>
+			
+			<a th:href="'yourvisits='+${patient.id}">
+				<div id="managevisits">
+					<h5>Twoje wizyty</h5>
+					<i class="icon-book"></i>
+					<br /><br />
+					Lista Twoich wizyt.
+				</div>
+			</a>
+			
+			<a th:href="'yourdata='+${patient.id}">
+				<div id="managedoctors">
+					<h5>Dane</h5>
+					<i class="icon-book"></i>
+					<br /><br />
+					Twoje dane.
+				</div>
+			</a>
+		</div>
+		
+		
+	</div>
+	
+	<footer>
+			&copy 2018 Dent-Med Inc. Wszelkie prawa zastrzeżone.
+	</footer>
+
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.com"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="pl">
+<head>
+	<meta charset="UTF-8">
+	<title>Dent-Med</title>
+
+	<meta name="description" content="Gabinet dentystyczny Dent-Med">
+	<meta name="keywords" content="dentysta, gabinet dentystyczny, stomatolog, stomatologia">
+	<meta name="author" content="Mateusz Zdzymira">
+	
+	<meta http-equiv="X-Ua-Compatible" content="IE=edge">
+	
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/fontello.css}">
+	
+	<link href="https://fonts.googleapis.com/css?family=Yantramanav:400,700&amp;subset=latin-ext" rel="stylesheet">	
+	<link href="https://fonts.googleapis.com/css?family=Fugaz+One" rel="stylesheet">
+	
+	<script src="js/jquery-3.3.1.min.js"></script>
+	
+	
+</head>
+
+<body>
+
+		<nav>
+			<div class="navbar2">
+				<ul>
+					<li style="padding: 0px;">
+						<div id="logomin">
+							<a href="/">
+								<img src="../img/tooth-1501321_640_resmin.png">
+								<span id="dent">Dent</span>-Med
+								
+							</a>
+							<div style="clear:both"></div>
+						</div>
+					</li>
+					<li><a href="/">Strona główna</a></li>
+					<li><a href="/home">Panel główny</a></li>
+					<li>Lista doktorów</li>
+				</ul>
+				<div sec:authorize="isAuthenticated()" class="logged">
+
+					<i class="icon-user"></i>Witaj, [[${#httpServletRequest.remoteUser}]]!(<a th:href="@{/logout}">Wyloguj</a>)
+					<div style="clear:both"></div>
+				</div>
+				
+				<div sec:authorize="isAnonymous()" class="logged">
+
+					<i class="icon-user"></i>Niezalogowany(<a th:href="@{/login}">Zaloguj</a>)
+
+					<div style="clear:both"></div>
+				</div>
+			</div>
+		</nav>
+		
+	
+	<div id="whitebox">
+		<h4>Doktorzy</h4>
+		<span style="text-align:center; display: block; padding-bottom: 30px;">
+			Tutaj masz dostęp do listy wszystkich doktorów.
+		</span>
+		<div id="verifylist">
+				
+				<table>
+					<tr>
+						<th>ID</th>
+						<th>Imię i nazwisko</th>
+						<th>E-mail</th>
+						<th>Telefon</th>
+					</tr>
+					<tr th:each="doctor : ${doctors}">
+							<td><a th:text="${doctor.id}" th:href="'../admin'+${'/doctorinfo/'+doctor.id}">ID doktora</a></td>
+							<td th:text="${doctor.fname}+' '+${doctor.lname}">Imię i nazwisko</td>
+							<td th:text="${doctor.mail}">E-mail</td>
+							<td th:text="${doctor.phone}">Telefon</td>
+					</tr>
+					
+				</table>
+				
+				<a href="home"><input type="submit" value="Powrót do panelu"></a>
+				<a href="adddoctor"><input type="button" value="Dodaj doktora"></a>
+		</div>
+		
+		
+	</div>
+	
+	<footer>
+			&copy 2018 Dent-Med Inc. Wszelkie prawa zastrzeżone.
+	</footer>
+
+</body>
+
+</html>

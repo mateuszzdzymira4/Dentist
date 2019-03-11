@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.com"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="pl">
+<head>
+	<meta charset="UTF-8">
+	<title>Dent-Med</title>
+
+	<meta name="description" content="Gabinet dentystyczny Dent-Med">
+	<meta name="keywords" content="dentysta, gabinet dentystyczny, stomatolog, stomatologia">
+	<meta name="author" content="Mateusz Zdzymira">
+	
+	<meta http-equiv="X-Ua-Compatible" content="IE=edge">
+	
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/fontello.css">
+	
+	<link href="https://fonts.googleapis.com/css?family=Yantramanav:400,700&amp;subset=latin-ext" rel="stylesheet">	
+	<link href="https://fonts.googleapis.com/css?family=Fugaz+One" rel="stylesheet">
+	
+	<script>
+	
+		function showPassword() {
+			  // Get the checkbox
+			  var checkBox = document.getElementById("newacc");
+			  // Get the output text
+			  var div = document.getElementById("newpassword");
+	
+			  // If the checkbox is checked, display the output text
+			  if (checkBox.checked == true){
+				  div.style.display = "block";
+			  } else {
+				  div.style.display = "none";
+			  }
+		}
+		
+	</script>
+	
+	
+</head>
+
+<body>
+
+		<nav>
+			<div class="navbar2">
+				<ul>
+					<li style="padding: 0px;">
+						<div id="logomin">
+							<a href="/">
+								<img src="img/tooth-1501321_640_resmin.png">
+								<span id="dent">Dent</span>-Med
+								
+							</a>
+							<div style="clear:both"></div>
+						</div>
+					</li>
+					<li><a href="/">Strona główna</a></li>
+					<li>Dane pacjenta</li>
+				</ul>
+				<div sec:authorize="isAuthenticated()" class="logged">
+
+					<i class="icon-user"></i>Witaj, [[${#httpServletRequest.remoteUser}]]!(<a th:href="@{/logout}">Wyloguj</a>)
+					<div style="clear:both"></div>
+				</div>
+				
+				<div sec:authorize="isAnonymous()" class="logged">
+
+					<i class="icon-user"></i>Niezalogowany(<a th:href="@{/login}">Zaloguj</a>)
+
+					<div style="clear:both"></div>
+				</div>
+			</div>
+		</nav>
+		
+	
+	<div id="whitebox">
+		<h4>Dane pacjenta</h4>
+		<span style="text-align:center;">
+			Abyśmy mogli zapisać Cię na wizytę u jednego z naszych specjalistów, potrzebujemy Twoich danych. Wpisz odpowiednie z nich w polach poniżej.<br /><br />
+		</span>
+		<div id="userdata">
+			<form method="post">
+				<label for="fname">Imię:</label>	<input type="text" name="fname" id="fname" required>
+				<label for="lname">Nazwisko:</label>	<input type="text" name="lname" id="lname" required>
+				<label for="mail">Email:</label>	<input type="email" name="mail" id="mail" placeholder="mail@mail.com" required> 
+				<label for="phone">Telefon kontaktowy:</label>	<input type="tel" name="phone" placeholder="9 cyfr" id="phone" required> 
+				<label for="password">Hasło:</label>	<input type="password" name="password" id="password"> 
+				<label for="repassword">Powtórz hasło:</label>	<input type="password" name="repassword" id="repassword"> 
+				<br />
+				<input type="submit" value="Zatwierdź dane">
+				<a href="/"><input type="button" value="Powrót do strony głównej"></a>
+			</form>
+		</div>
+		
+		
+	</div>
+	
+	<footer>
+			&copy 2018 Dent-Med Inc. Wszelkie prawa zastrzeżone.
+	</footer>
+
+</body>
+
+</html>

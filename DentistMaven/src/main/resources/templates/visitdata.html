@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.com"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="pl">
+<head>
+	<meta charset="UTF-8">
+	<title>Dent-Med</title>
+
+	<meta name="description" content="Gabinet dentystyczny Dent-Med">
+	<meta name="keywords" content="dentysta, gabinet dentystyczny, stomatolog, stomatologia">
+	<meta name="author" content="Mateusz Zdzymira">
+	
+	<meta http-equiv="X-Ua-Compatible" content="IE=edge">
+	
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/fontello.css}">
+	
+	<link href="https://fonts.googleapis.com/css?family=Yantramanav:400,700&amp;subset=latin-ext" rel="stylesheet">	
+	<link href="https://fonts.googleapis.com/css?family=Fugaz+One" rel="stylesheet">
+	
+	<script src="js/jquery-3.3.1.min.js"></script>
+	
+		<script>
+				$(document).ready( function() {
+				    var now = new Date();
+				 
+				    var day = ("0" + now.getDate()).slice(-2);
+				    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+				   
+				    
+				    var hour = ("0" + (now.getHours())).slice(-2);
+				    var minute = ("0" + (now.getMinutes())).slice(-2);
+
+				    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+				    var time = (hour)+":"+(minute);
+
+
+				   $('#datefield').val(today);
+				   $('#hourfield').val(time);
+				    
+				});
+		</script>
+	
+</head>
+
+<body>
+
+		<nav>
+			<div class="navbar2">
+				<ul>
+					<li style="padding: 0px;">
+						<div id="logomin">
+							<a href="/">
+								<img src="../img/tooth-1501321_640_resmin.png">
+								<span id="dent">Dent</span>-Med
+								
+							</a>
+							<div style="clear:both"></div>
+						</div>
+					</li>
+					<li><a href="/">Strona główna</a></li>
+					<li>Dane pacjenta</li>
+					<li>Dane wizyty</li>
+				</ul>
+				<div sec:authorize="isAuthenticated()" class="logged">
+
+					<i class="icon-user"></i>Witaj, [[${#httpServletRequest.remoteUser}]]!(<a th:href="@{/logout}">Wyloguj</a>)
+					<div style="clear:both"></div>
+				</div>
+				
+				<div sec:authorize="isAnonymous()" class="logged">
+
+					<i class="icon-user"></i>Niezalogowany(<a th:href="@{/login}">Zaloguj</a>)
+
+					<div style="clear:both"></div>
+				</div>
+			</div>
+		</nav>
+		
+	
+	<div id="whitebox">
+		<h4>Dane wizyty</h4>
+		
+		<span style="text-align:center;">
+			W tym oknie możesz sprecyzować szczegóły wizyty, wybrać konkretnego lekarza, termin wizyty, a także, w razie potrzeby, sprecyzować jej cel. <br /><br />
+		</span>
+		<div id="visitdata">
+			<form method="post">
+				<label for="docname">Lekarz, który ma przeprowadzić zabieg:</label>	
+				<select id="docname" name="doctor">
+					<option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="'lekarz dentysta '+${doctor.fname}+' '+${doctor.lname}"></option>
+				</select>
+				
+				<fieldset>
+							
+					<legend> Zakres wizyty: </legend>
+							
+						<div class="column">
+							<div><label><input type="radio" name="purpose" value="Badanie wstępne" checked> Badanie wstępne </label></div>
+							<div><label><input type="radio" name="purpose" value="1"> Konsultacja stomatologiczna </label></div>
+							<div><label><input type="radio" name="purpose" value="2"> Znieczulenie miejscowe </label></div>
+							<div><label><input type="radio" name="purpose" value="3"> Wypełnienie </label></div>
+						</div>
+						
+						<div class="column">
+							<div><label><input type="radio" name="purpose" value="4" > Fluoryzacja </label></div>
+							<div><label><input type="radio" name="purpose" value="5"> Odbudowa </label></div>
+							<div><label><input type="radio" name="purpose" value="6"> Wybielanie zębów </label></div>
+							<div><label><input type="radio" name="purpose" value="7"> Leczenie zęba kanałowego </label></div>
+						</div>
+						
+				</fieldset>
+				
+				<!--<object type="text/html" data="calendar" style="width: 100%; height: 431px;"> </object>-->
+	
+				
+				<h5 style="font-size: 20px;">
+					<label for="datefield">Data: </label>
+					<input type="date" name="date" id="datefield" style="margin-right: 10px;">
+					<label for="hourfield">Godzina: </label>
+					<input type="time" name="hour" id="hourfield" min="9:00" max="17:00">
+				</h5>
+				
+				
+				<input type="submit" value="Zatwierdź dane">
+			</form>
+		</div>
+		
+		
+	</div>
+	
+	<footer>
+			&copy 2018 Dent-Med Inc. Wszelkie prawa zastrzeżone.
+	</footer>
+
+</body>
+
+</html>
